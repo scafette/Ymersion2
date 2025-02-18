@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ car.name }}{% endblock %}
+
+{% block body %}
+<section class="car-info">
+    <h1>{{ car.name }}</h1>
+    <p>{{ car.details }}</p>
+</section>
+{% endblock %}
