@@ -4,14 +4,6 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-garage:
-    path: /Garage
-    controller: App\Controller\GarageController::index
-
 home:
     path: /home
     controller: App\Controller\HomeController::index
-
-car_info:
-    path: /car_info
-    controller: App\Controller\CarInfoController::index
