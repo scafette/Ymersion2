@@ -8,3 +8,11 @@ controllers:
 home:
     path: /home
     controller: App\Controller\HomeController::index
+
+login:
+    path: /login
+    controller: App\Controller\LoginController::login
+
+register:
+    path: /register
+    controller: App\Controller\RegisterController::index
