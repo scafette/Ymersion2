@@ -2,9 +2,6 @@ controllers:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
-<<<<<<< HEAD
-    type: attribute
-=======
     type: attribute
 
 garage:
@@ -14,4 +11,7 @@ garage:
 home:
     path: /home
     controller: App\Controller\HomeController::index
->>>>>>> 26421bb3a19d9a5861c635c7f79ec6f7cf84f689
+
+car_info:
+    path: /car_info
+    controller: App\Controller\CarInfoController::index
