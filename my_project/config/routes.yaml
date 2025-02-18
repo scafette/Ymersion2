@@ -3,3 +3,11 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+garage:
+    path: /Garage
+    controller: App\Controller\GarageController::index
+
+home:
+    path: /home
+    controller: App\Controller\HomeController::index
