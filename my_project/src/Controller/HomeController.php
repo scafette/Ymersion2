@@ -19,10 +19,6 @@ class HomeController extends AbstractController
 //     }
 // }
 function index(EntityManagerInterface $em, UserPasswordHasherInterface $hasher): Response {
-    $user = new User();
-    $user->setEmail('gio@ma.fr')->setUsername('gio')->setPassword($hasher->hashPassword($user, 'gio'));
-    $em->persist($user);
-    $em->flush();
     return $this->render('home/index.html.twig');
 }
 }
