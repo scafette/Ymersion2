@@ -16,3 +16,7 @@ login:
 register:
     path: /register
     controller: App\Controller\RegisterController::index
+
+cata:
+    path: /cars
+    controller: App\Controller\RegisterController::index

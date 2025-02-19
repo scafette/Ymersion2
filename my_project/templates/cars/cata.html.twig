@@ -1,0 +1,21 @@
+
+{% block title %}Catalogue des Voitures{% endblock %}
+
+{% block body %}
+    <h1>Catalogue des Voitures</h1>
+
+    <div class="cars-container">
+        {% for car in cars %}
+            <div class="car-card">
+                <img src="{{ car.image }}" alt="{{ car.brand }} {{ car.model }}">
+                <h2>{{ car.brand }} {{ car.model }}</h2>
+                <p>Type : {{ car.type }}</p>
+                <p>Couleur : {{ car.color }}</p>
+                <p>Puissance : {{ car.horsepower }} ch</p>
+                <p>Prix : {{ car.price }} €</p>
+            </div>
+        {% else %}
+            <p>Aucune voiture disponible.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
