@@ -24,7 +24,7 @@ class CarController extends AbstractController
         $response = $this->client->request('GET', $apiUrl);
         $cars = $response->toArray();
 
-        return $this->render('cars/cata.html.twig', [
+        return $this->render('cars/cars.html.twig', [
             'cars' => $cars
         ]);
     }
