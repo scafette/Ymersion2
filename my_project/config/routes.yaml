@@ -20,3 +20,7 @@ register:
 cars:
     path: /cars
     controller: App\Controller\RegisterController::index
+
+admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
