@@ -57,4 +57,37 @@ class CarController extends AbstractController
             'car' => $car
         ]);
     }
+    
+    #[Route('/cars/{id}/like', name: 'like_car', methods: ['POST'])]
+public function likeCar(int $id, Request $request, \Doctrine\DBAL\Connection $connection): Response
+{
+    $userId = $this->getUser()->getId(); // Vérifie que l'utilisateur est connecté
+
+    // Vérifier si l'utilisateur a déjà liké la voiture
+    $existingLike = $connection->fetchOne("SELECT id FROM likes WHERE car_id = ? AND user_id = ?", [$id, $userId]);
+
+    if ($existingLike) {
+        // Supprimer le like (toggle)
+        $connection->executeQuery("DELETE FROM likes WHERE car_id = ? AND user_id = ?", [$id, $userId]);
+        $liked = false;
+    } else {
+        // Ajouter un like
+        $connection->executeQuery("INSERT INTO likes (car_id, user_id) VALUES (?, ?)", [$id, $userId]);
+        $liked = true;
+    }
+
+    // Récupérer le nouveau nombre de likes
+    $likeCount = $connection->fetchOne("SELECT COUNT(*) FROM likes WHERE car_id = ?", [$id]);
+
+    return $this->json(["liked" => $liked, "likes" => $likeCount]);
+}
+
+#[Route('/cars/{id}/likes', name: 'get_car_likes', methods: ['GET'])]
+public function getCarLikes(int $id, \Doctrine\DBAL\Connection $connection): Response
+{
+    $likeCount = $connection->fetchOne("SELECT COUNT(*) FROM likes WHERE car_id = ?", [$id]);
+
+    return $this->json(["likes" => $likeCount]);
+}
+
 }
