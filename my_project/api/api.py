@@ -22,7 +22,6 @@ class Vehicle(db.Model):
     model = db.Column(db.String(100), nullable=False)
     image = db.Column(db.Text, nullable=False)
 
-    # Méthode pour convertir l'objet en dictionnaire
     def to_dict(self):
         return {
             "id": self.id,
@@ -35,7 +34,6 @@ class Vehicle(db.Model):
             "image": self.image
         }
 
-# Créer la base de données si elle n'existe pas
 with app.app_context():
     db.create_all()
 
@@ -53,15 +51,46 @@ def get_car(car_id):
         return jsonify(car.to_dict())
     return jsonify({"error": "Voiture non trouvée"}), 404
 
-# Route pour rechercher une voiture par marque
+# Route de recherche avancée avec plusieurs filtres
 @app.route("/cars/search", methods=["GET"])
-def search_car():
-    marque = request.args.get("brand")
-    if not marque:
-        return jsonify({"error": "Veuillez spécifier une marque"}), 400
+def search_cars():
+    brand = request.args.get("brand")
+    color = request.args.get("color")
+    type_ = request.args.get("type")
+    model = request.args.get("model")
+    min_price = request.args.get("minPrice", type=float)
+    max_price = request.args.get("maxPrice", type=float)
 
-    cars = Vehicle.query.filter(Vehicle.brand.ilike(f"%{marque}%")).all()
+    query = Vehicle.query
+
+    if brand:
+        query = query.filter(Vehicle.brand.ilike(f"%{brand}%"))
+    if color:
+        query = query.filter(Vehicle.color.ilike(f"%{color}%"))
+    if type_:
+        query = query.filter(Vehicle.type.ilike(f"%{type_}%"))
+    if model:
+        query = query.filter(Vehicle.model.ilike(f"%{model}%"))
+    if min_price is not None:
+        query = query.filter(Vehicle.price >= min_price)
+    if max_price is not None:
+        query = query.filter(Vehicle.price <= max_price)
+
+    cars = query.all()
+    
     return jsonify([car.to_dict() for car in cars]) if cars else jsonify({"message": "Aucune voiture trouvée"})
+
+# Route pour récupérer les 30 premières voitures
+@app.route("/cars/first30", methods=["GET"])
+def get_first_30_cars():
+    cars = Vehicle.query.limit(30).all()
+    return jsonify([car.to_dict() for car in cars])
+
+# Route pour récupérer les 33 dernières voitures
+@app.route("/cars/last33", methods=["GET"])
+def get_last_33_cars():
+    cars = Vehicle.query.order_by(Vehicle.id.desc()).limit(33).all()
+    return jsonify([car.to_dict() for car in reversed(cars)])
 
 # Route pour ajouter une voiture
 @app.route("/cars", methods=["POST"])
@@ -81,18 +110,6 @@ def add_car():
     db.session.commit()
 
     return jsonify({"message": "Voiture ajoutée avec succès !"}), 201
-
-# Route pour récupérer les 30 premières voitures
-@app.route("/cars/first30", methods=["GET"])
-def get_first_30_cars():
-    cars = Vehicle.query.limit(30).all()
-    return jsonify([car.to_dict() for car in cars])
-
-# Route pour récupérer les 33 dernières voitures
-@app.route("/cars/last33", methods=["GET"])
-def get_last_33_cars():
-    cars = Vehicle.query.order_by(Vehicle.id.desc()).limit(33).all()
-    return jsonify([car.to_dict() for car in reversed(cars)])
 
 if __name__ == "__main__":
     print("🚀 Lancement du serveur Flask avec SQLite...")
