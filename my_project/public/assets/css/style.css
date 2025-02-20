@@ -204,13 +204,25 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
 /*-------------------------------------
         3.  Welcome-hero
 --------------------------------------*/
+@keyframes zoomBackground {
+    0% {
+        background-size: 100%;
+    }
+    100% {
+        background-size: 110%;
+    }
+}
+
 .welcome-hero {
     position: relative;
-    background:url(../images/welcome-hero/welcome-banner.jpg)no-repeat;
-    background-position: center;
+    background: url(../images/welcome-hero/welcome-banner.jpg) no-repeat center;
     background-size: cover;
     z-index: 1;
+    
+    /* Appliquer l'animation */
+    animation: zoomBackground 10s ease-in-out infinite alternate;
 }
+
 .welcome-hero:before {
     position: absolute;
     content: "";
