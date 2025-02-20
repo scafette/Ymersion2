@@ -64,4 +64,4 @@ def create_controlled_vehicles(n=10):
         print(f"{n} véhicules ajoutés avec succès !")
 
 if __name__ == "__main__":
-    create_controlled_vehicles(30)
+    create_controlled_vehicles(60)

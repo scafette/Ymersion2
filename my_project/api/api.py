@@ -82,6 +82,18 @@ def add_car():
 
     return jsonify({"message": "Voiture ajoutée avec succès !"}), 201
 
+# Route pour récupérer les 30 premières voitures
+@app.route("/cars/first30", methods=["GET"])
+def get_first_30_cars():
+    cars = Vehicle.query.limit(30).all()
+    return jsonify([car.to_dict() for car in cars])
+
+# Route pour récupérer les 33 dernières voitures
+@app.route("/cars/last33", methods=["GET"])
+def get_last_33_cars():
+    cars = Vehicle.query.order_by(Vehicle.id.desc()).limit(33).all()
+    return jsonify([car.to_dict() for car in reversed(cars)])
+
 if __name__ == "__main__":
     print("🚀 Lancement du serveur Flask avec SQLite...")
     app.run(debug=True)
