@@ -238,16 +238,16 @@
         <div class="row">
             {% for car in cars %}
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <img src="{{ car.image }}" class="card-img-top" alt="{{ car.brand }} {{ car.model }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
-                            <p class="card-text"><strong>Type :</strong> {{ car.type }}</p>
-                            <p class="card-text"><strong>Couleur :</strong> {{ car.color }}</p>
-                            <p class="card-text"><strong>Puissance :</strong> {{ car.horsepower }} ch</p>
-                            <p class="card-text"><strong>Prix :</strong> {{ car.price }} €</p>
-                        </div>
-                    </div>
+					<button class="card shadow-sm" onclick="window.location.href='/cars/{{ car.id }}'" style="border: none; background: none; padding: 0; text-align: left; width: 100%;">
+						<img src="{{ car.image }}" class="card-img-top" alt="{{ car.brand }} {{ car.model }}">
+						<div class="card-body">
+							<h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+							<p class="card-text"><strong>Type :</strong> {{ car.type }}</p>
+							<p class="card-text"><strong>Couleur :</strong> {{ car.color }}</p>
+							<p class="card-text"><strong>Puissance :</strong> {{ car.horsepower }} ch</p>
+							<p class="card-text"><strong>Prix :</strong> {{ car.price }} €</p>
+						</div>
+					</button>
                 </div>
             {% else %}
                 <p class="text-center">Aucune voiture disponible.</p>

@@ -53,5 +53,7 @@ class CarController extends AbstractController
         return $this->render('cars/cars.html.twig', [
             'cars' => $cars
         ]);
+
+        
     }
 }
